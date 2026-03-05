@@ -1,5 +1,17 @@
 <script setup lang="ts">
+import { ref, computed } from 'vue'
 import { mockSneakers } from '~/data/sneakers'
+
+const selectedBrand = ref('Alle')
+
+const brands = ['Alle', 'Nike', 'Adidas', 'Vans', 'Converse']
+
+const filteredSneakers = computed(() => {
+  if (selectedBrand.value === 'Alle') {
+    return mockSneakers
+  }
+  return mockSneakers.filter(sneaker => sneaker.brand === selectedBrand.value)
+})
 </script>
 
 <template>
@@ -19,9 +31,27 @@ import { mockSneakers } from '~/data/sneakers'
       <p class="text-gray-500 mt-2">Vind unieke ontwerpen die nergens anders te krijgen zijn.</p>
     </header>
 
+    <div class="max-w-6xl mx-auto px-4 mb-8">
+  <div class="flex flex-wrap gap-3">
+    <button 
+      v-for="brand in brands" 
+      :key="brand"
+      @click="selectedBrand = brand"
+      :class="[
+        'px-6 py-2 rounded-full border transition-all duration-200 font-medium',
+        selectedBrand === brand 
+          ? 'bg-blue-600 border-blue-600 text-white shadow-md' 
+          : 'bg-white border-gray-300 text-gray-700 hover:border-blue-400'
+      ]"
+    >
+      {{ brand }}
+    </button>
+  </div>
+</div>
+
     <main class="max-w-6xl mx-auto px-4 pb-20">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <div v-for="sneaker in mockSneakers" :key="sneaker.id" 
+        <div v-for="sneaker in filteredSneakers" :key="sneaker.id" 
              class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow cursor-pointer">
           <img :src="sneaker.image" class="h-64 w-full object-cover" />
           <div class="p-6">
