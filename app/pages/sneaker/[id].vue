@@ -11,7 +11,7 @@ const { showToast } = useToast()
 const handleClaim = () => {
   if (sneaker) {
     addToCart(sneaker)
-    showToast(`${sneaker.name} toegevoegd!`)
+    showToast(`${sneaker.name}  aan winkelmandje!`)
   }
 }
 

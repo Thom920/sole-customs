@@ -15,9 +15,8 @@ const { cartItems, totalPrice, removeFromCart } = useCart()
                         <h3 class="font-bold text-lg">{{ item.name }}</h3>
                         <p class="text-blue-600 font-bold">€{{ item.price }}</p>
                     </div>
-                    <button @click="removeFromCart(index)" class="text-red-400 hover:text-red-600 p-2">
-                        <!-- Wil hier nog een prullenbakje van maken -->
-                        Verwijder
+                    <button @click="removeFromCart(index)" class="text-red-400 hover:text-red-600 p-3 transition hover:scale-110">
+                        <img src="/images/bin.png" alt="Verwijderen" class="w-6 h-6" />
                     </button>
                 </div>
             </div>
