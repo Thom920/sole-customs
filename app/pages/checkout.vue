@@ -1,5 +1,18 @@
 <script setup lang="ts">
-const { cartItems, totalPrice, removeFromCart } = useCart()
+const { cartItems, totalPrice, removeFromCart, clearCart } = useCart()
+const isProcessing = ref(false)
+const isFinished = ref(false)
+
+const handleCheckout = async () => {
+  isProcessing.value = true
+  
+  await new Promise(resolve => setTimeout(resolve, 2000))
+  
+  isProcessing.value = false
+  isFinished.value = true
+  
+  clearCart() 
+}
 </script>
 
 <template>
@@ -35,8 +48,16 @@ const { cartItems, totalPrice, removeFromCart } = useCart()
                     <span>Totaal</span>
                     <span>€{{ totalPrice }}</span>
                 </div>
-                <button class="w-full bg-blue-600 text-white mt-8 py-4 rounded-xl font-bold hover:bg-blue-700 transition shadow-lg shadow-blue-200">
-                    Afrekenen
+                <button 
+                @click="handleCheckout" 
+                :disabled="isProcessing"
+                class="w-full bg-blue-600 text-white mt-8 py-4 rounded-xl font-bold hover:bg-blue-700 transition shadow-lg flex items-center justify-center"
+                >
+                    <span v-if="isProcessing" class="flex items-center">
+                        <svg class="animate-spin h-5 w-5 mr-3 border-t-2 border-white rounded-full" viewBox="0 0 24 24"></svg>
+                        Bankverbinding maken...
+                    </span>
+                    <span v-else>Veilig Afrekenen</span>
                 </button>
             </div>
         </div>
@@ -48,4 +69,15 @@ const { cartItems, totalPrice, removeFromCart } = useCart()
             </NuxtLink>
         </div>
     </div>
+    <div v-if="isFinished" class="fixed inset-0 bg-gray-900/90 backdrop-blur-sm z-[100] flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl p-10 max-w-sm w-full text-center shadow-2xl scale-in-center">
+            <div class="text-6xl mb-6">🎉</div>
+            <h2 class="text-3xl font-black mb-2">Betaling Geslaagd!</h2>
+            <p class="text-gray-600 mb-8">Je custom sneakers worden nu gemaakt</p>
+            <NuxtLink to="/" class="block w-full bg-gray-900 text-white py-4 rounded-xl font-bold">
+                Verder Winkelen
+            </NuxtLink>
+        </div>
+    </div>
 </template>
+

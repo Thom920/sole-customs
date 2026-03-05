@@ -11,6 +11,10 @@ export const useCart = () => {
         cartItems.value.splice(index, 1)
     }
 
+    const clearCart = () => {
+        cartItems.value = []
+    }
+
     const cartCount = computed(() => cartItems.value.length)
 
     const totalPrice = computed(() =>
@@ -22,6 +26,7 @@ export const useCart = () => {
         cartCount,
         totalPrice,
         addToCart,
-        removeFromCart
+        removeFromCart,
+        clearCart
     }
 }
