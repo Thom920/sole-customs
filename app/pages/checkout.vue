@@ -1,12 +1,18 @@
 <script setup lang="ts">
 const { cartItems, totalPrice, removeFromCart, clearCart } = useCart()
+const { createOrder } = useOrders()
 const isProcessing = ref(false)
 const isFinished = ref(false)
 
 const handleCheckout = async () => {
+    const itemsSnapshot = cartItems.value.map(item => ({ ...item }))
   isProcessing.value = true
   
   await new Promise(resolve => setTimeout(resolve, 2000))
+
+    if (itemsSnapshot.length > 0) {
+        createOrder(itemsSnapshot)
+    }
   
   isProcessing.value = false
   isFinished.value = true
