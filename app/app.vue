@@ -1,8 +1,8 @@
 <script setup lang="ts">
-  const { cartCount } = useCart()
-  const { isVisible, message } = useToast()
+import { Analytics } from '@vercel/analytics/nuxt'
 
-  import { Analytics } from '@vercel/analytics/nuxt'
+const { cartCount } = useCart()
+const { isVisible, message } = useToast()
 </script>
 
 <template>
