@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { Analytics } from '@vercel/analytics/nuxt'
 
-const { cartCount } = useCart()
-const { isVisible, message } = useToast()
+  import { Analytics } from '@vercel/analytics/nuxt'
+  import { SpeedInsights } from '@vercel/speed-insights/vue'
 </script>
 
 <template>
@@ -29,6 +29,7 @@ const { isVisible, message } = useToast()
     </nav>
     <NuxtPage />
     <Analytics />
+    <SpeedInsights />
   </div>
   <div v-if="isVisible" class="fixed bottom-8 right-8 bg-gray-900 text-white px-6 py-4 rounded-2xl shadow-2xl transition-all animate-bounce z-50">
    {{ message }}
